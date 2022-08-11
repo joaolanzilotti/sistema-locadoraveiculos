@@ -49,9 +49,12 @@ public class FabricanteController {
         if(listaFabricante.isEmpty()){JOptionPane.showMessageDialog(null, "Codigo Não Encontrado!");}
         
         else{
+            
         em.getTransaction().begin();
         em.remove(listaFabricante.get(0));
         em.getTransaction().commit();
+        //O em.frush diz que algum comando do entityManager Deve ser Executado agora! neste instante!
+        //em.flush();
         JOptionPane.showMessageDialog(null, "Removido Com Sucesso!");
         isValidRemover = true;
         }
