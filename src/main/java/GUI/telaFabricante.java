@@ -111,7 +111,7 @@ public class telaFabricante extends javax.swing.JFrame {
         if (labelNome.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Nada Digitado!");
         } else {
-            fcontroler.salvar();
+            fcontroler.salvarFabricante();
             labelNome.setText("");
         }
 

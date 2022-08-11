@@ -2,6 +2,7 @@ package controller;
 
 
 import helper.Conexao;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
 import modelo.Fabricante;
@@ -15,7 +16,8 @@ public class FabricanteController {
         this.fabricante = fabricante;
     }
 
-    public void salvar() {
+    
+    public void salvarFabricante() {
         
 //        EntityManagerFactory emf = Persistence.createEntityManagerFactory("locadoraJ");
 //        EntityManager em = emf.createEntityManager();
@@ -35,4 +37,29 @@ public class FabricanteController {
         
     }
 
+    public boolean removerFabricante(){
+        
+            boolean isValidRemover = false;
+    
+        EntityManager em = Conexao.getInstancia().getMysqlPU();
+        
+        List<Fabricante> listaFabricante = em.createQuery("select f from Fabricante f  where f.codigo=:codigoForm", Fabricante.class).setParameter("codigoForm", fabricante.getCodigo()).getResultList();
+        System.out.println(listaFabricante);
+        
+        if(listaFabricante.isEmpty()){JOptionPane.showMessageDialog(null, "Codigo Não Encontrado!");}
+        
+        else{
+        em.getTransaction().begin();
+        em.remove(listaFabricante.get(0));
+        em.getTransaction().commit();
+        JOptionPane.showMessageDialog(null, "Removido Com Sucesso!");
+        isValidRemover = true;
+        }
+        
+        
+        return isValidRemover;
+        
+    }
+
+    
 }

@@ -37,6 +37,12 @@ public class Fabricante {
         this.nome = nome;
     }
 
+    public Fabricante(Long codigo) {
+        this.codigo = codigo;
+    }
+    
+    
+
     public Fabricante() {
     }
     

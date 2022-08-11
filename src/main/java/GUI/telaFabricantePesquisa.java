@@ -4,11 +4,13 @@
  */
 package GUI;
 
+import controller.FabricanteController;
 import helper.Conexao;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Fabricante;
 
@@ -58,7 +60,10 @@ public class telaFabricantePesquisa extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaFabricante = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        botaoNovoFabricante = new javax.swing.JButton();
+        botaoRemoverFabricante = new javax.swing.JButton();
+        caixaRemoverFabricante = new javax.swing.JTextField();
+        labelRemover = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,31 +92,80 @@ public class telaFabricantePesquisa extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabelaFabricante);
 
-        jButton1.setText("Novo");
+        botaoNovoFabricante.setText("Novo");
+        botaoNovoFabricante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoNovoFabricanteMouseClicked(evt);
+            }
+        });
+
+        botaoRemoverFabricante.setText("Remover");
+        botaoRemoverFabricante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoRemoverFabricanteMouseClicked(evt);
+            }
+        });
+
+        labelRemover.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        labelRemover.setText("Digite o Codigo para Remover");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jButton1)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(199, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(189, 189, 189))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(189, 189, 189))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelRemover)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(caixaRemoverFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(botaoRemoverFabricante)))
+                        .addGap(266, 266, 266))))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(botaoNovoFabricante)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                .addComponent(botaoNovoFabricante)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(labelRemover)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoRemoverFabricante)
+                    .addComponent(caixaRemoverFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(78, 78, 78))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botaoNovoFabricanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoNovoFabricanteMouseClicked
+        new telaFabricante().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_botaoNovoFabricanteMouseClicked
+
+    private void botaoRemoverFabricanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoRemoverFabricanteMouseClicked
+        
+        try{
+        Fabricante fabricante = new Fabricante(Long.parseLong(caixaRemoverFabricante.getText()));
+        FabricanteController fcontroller = new FabricanteController(fabricante);
+        if(fcontroller.removerFabricante()){
+            mostrarTabela();
+        }
+        
+        }catch(NumberFormatException e1){JOptionPane.showMessageDialog(null, "Codigo Incorreto!");}
+    }//GEN-LAST:event_botaoRemoverFabricanteMouseClicked
 
     /**
      * @param args the command line arguments
@@ -149,8 +203,11 @@ public class telaFabricantePesquisa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton botaoNovoFabricante;
+    private javax.swing.JButton botaoRemoverFabricante;
+    private javax.swing.JTextField caixaRemoverFabricante;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelRemover;
     private javax.swing.JTable tabelaFabricante;
     // End of variables declaration//GEN-END:variables
 }
