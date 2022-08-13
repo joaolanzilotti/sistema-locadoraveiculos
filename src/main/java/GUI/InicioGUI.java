@@ -122,7 +122,7 @@ public class InicioGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoFabricanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoFabricanteMouseClicked
-        new telaFabricante().setVisible(true);
+        new TelaFabricante().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_botaoFabricanteMouseClicked
 

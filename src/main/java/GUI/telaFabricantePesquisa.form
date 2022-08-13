@@ -45,14 +45,18 @@
           </Group>
           <Group type="102" attributes="0">
               <Component id="botaoNovoFabricante" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="botaoEditar" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <Component id="botaoNovoFabricante" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="botaoNovoFabricante" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="botaoEditar" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace pref="37" max="32767" attributes="0"/>
               <Component id="labelRemover" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -129,6 +133,14 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Digite o Codigo para Remover"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="botaoEditar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Editar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="botaoEditarMouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

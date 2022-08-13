@@ -18,7 +18,7 @@ import modelo.Fabricante;
  *
  * @author Luciano
  */
-public class telaFabricantePesquisa extends javax.swing.JFrame {
+public class TelaFabricantePesquisa extends javax.swing.JFrame {
 
     public void mostrarTabela(){
         
@@ -44,7 +44,7 @@ public class telaFabricantePesquisa extends javax.swing.JFrame {
     /**
      * Creates new form telaFabricantePesquisa
      */
-    public telaFabricantePesquisa() {
+    public TelaFabricantePesquisa() {
         initComponents();
         mostrarTabela();
     }
@@ -64,6 +64,7 @@ public class telaFabricantePesquisa extends javax.swing.JFrame {
         botaoRemoverFabricante = new javax.swing.JButton();
         caixaRemoverFabricante = new javax.swing.JTextField();
         labelRemover = new javax.swing.JLabel();
+        botaoEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,6 +110,13 @@ public class telaFabricantePesquisa extends javax.swing.JFrame {
         labelRemover.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         labelRemover.setText("Digite o Codigo para Remover");
 
+        botaoEditar.setText("Editar");
+        botaoEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoEditarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -129,12 +137,15 @@ public class telaFabricantePesquisa extends javax.swing.JFrame {
                         .addGap(266, 266, 266))))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(botaoNovoFabricante)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botaoEditar))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(botaoNovoFabricante)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoNovoFabricante)
+                    .addComponent(botaoEditar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(labelRemover)
                 .addGap(18, 18, 18)
@@ -151,7 +162,7 @@ public class telaFabricantePesquisa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoNovoFabricanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoNovoFabricanteMouseClicked
-        new telaFabricante().setVisible(true);
+        new TelaFabricante().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_botaoNovoFabricanteMouseClicked
 
@@ -166,6 +177,11 @@ public class telaFabricantePesquisa extends javax.swing.JFrame {
         
         }catch(NumberFormatException e1){JOptionPane.showMessageDialog(null, "Codigo Incorreto!");}
     }//GEN-LAST:event_botaoRemoverFabricanteMouseClicked
+
+    private void botaoEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoEditarMouseClicked
+        new TelaFabricanteEditar().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_botaoEditarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -184,25 +200,27 @@ public class telaFabricantePesquisa extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(telaFabricantePesquisa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaFabricantePesquisa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(telaFabricantePesquisa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaFabricantePesquisa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(telaFabricantePesquisa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaFabricantePesquisa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(telaFabricantePesquisa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaFabricantePesquisa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new telaFabricantePesquisa().setVisible(true);
+                new TelaFabricantePesquisa().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoEditar;
     private javax.swing.JButton botaoNovoFabricante;
     private javax.swing.JButton botaoRemoverFabricante;
     private javax.swing.JTextField caixaRemoverFabricante;

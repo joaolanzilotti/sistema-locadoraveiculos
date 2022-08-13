@@ -12,12 +12,12 @@ import modelo.Fabricante;
  *
  * @author Luciano
  */
-public class telaFabricante extends javax.swing.JFrame {
+public class TelaFabricante extends javax.swing.JFrame {
 
     /**
      * Creates new form telaFabricante
      */
-    public telaFabricante() {
+    public TelaFabricante() {
         initComponents();
     }
 
@@ -118,7 +118,7 @@ public class telaFabricante extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoSalvarMouseClicked
 
     private void botaoPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoPesquisarMouseClicked
-        new telaFabricantePesquisa().setVisible(true);
+        new TelaFabricantePesquisa().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_botaoPesquisarMouseClicked
 
@@ -139,20 +139,21 @@ public class telaFabricante extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(telaFabricante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaFabricante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(telaFabricante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaFabricante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(telaFabricante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaFabricante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(telaFabricante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaFabricante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new telaFabricante().setVisible(true);
+                new TelaFabricante().setVisible(true);
             }
         });
     }
