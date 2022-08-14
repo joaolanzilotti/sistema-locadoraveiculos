@@ -113,7 +113,7 @@ public class TelaFabricante extends javax.swing.JFrame {
         } else {
             fcontroler.salvarFabricante();
             labelNome.setText("");
-        }
+        } 
 
     }//GEN-LAST:event_botaoSalvarMouseClicked
 

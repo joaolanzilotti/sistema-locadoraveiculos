@@ -6,6 +6,7 @@ package GUI;
 
 import controller.FabricanteController;
 import helper.Conexao;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,39 +15,39 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Fabricante;
 
-/**
- *
- * @author Luciano
- */
 public class TelaFabricantePesquisa extends javax.swing.JFrame {
 
-    public void mostrarTabela(){
-        
+    private List<Fabricante> temporario = new ArrayList<>();
+
+    public void mostrarTabela() {
+
         EntityManager em = Conexao.getInstancia().getMysqlPU();
 
-            List<Fabricante> fabricantes = em.createQuery("select c from Fabricante c ", Fabricante.class).getResultList();
+        List<Fabricante> fabricantes = em.createQuery("select c from Fabricante c ", Fabricante.class).getResultList();
 
-            DefaultTableModel model = (DefaultTableModel) tabelaFabricante.getModel();
-            model.setNumRows(0);
+        DefaultTableModel model = (DefaultTableModel) tabelaFabricante.getModel();
+        model.setNumRows(0);
 
-            for (Fabricante fabricante : fabricantes) {
+        for (Fabricante fabricante : fabricantes) {
 
-                Object[] linhasLista = {
-                    fabricante.getCodigo(),
-                    fabricante.getNome()};
-                model.addRow(linhasLista);
-                tabelaFabricante.setModel(model);
+            Object[] linhasLista = {
+                fabricante.getCodigo(),
+                fabricante.getNome()};
+            model.addRow(linhasLista);
+            tabelaFabricante.setModel(model);
 
-            }
-    
+        }
+
     }
-    
+
     /**
      * Creates new form telaFabricantePesquisa
      */
     public TelaFabricantePesquisa() {
         initComponents();
         mostrarTabela();
+        botaoEditarFabricante.setVisible(false);
+        caixaNomeFabricante.setVisible(false);
     }
 
     /**
@@ -64,7 +65,11 @@ public class TelaFabricantePesquisa extends javax.swing.JFrame {
         botaoRemoverFabricante = new javax.swing.JButton();
         caixaRemoverFabricante = new javax.swing.JTextField();
         labelRemover = new javax.swing.JLabel();
-        botaoEditar = new javax.swing.JButton();
+        botaoEditarFabricante = new javax.swing.JButton();
+        caixaCodigoFabricante = new javax.swing.JTextField();
+        botaoBuscarFabricante = new javax.swing.JButton();
+        caixaNomeFabricante = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,51 +115,84 @@ public class TelaFabricantePesquisa extends javax.swing.JFrame {
         labelRemover.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         labelRemover.setText("Digite o Codigo para Remover");
 
-        botaoEditar.setText("Editar");
-        botaoEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+        botaoEditarFabricante.setText("Editar");
+        botaoEditarFabricante.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                botaoEditarMouseClicked(evt);
+                botaoEditarFabricanteMouseClicked(evt);
             }
         });
+
+        botaoBuscarFabricante.setText("Buscar");
+        botaoBuscarFabricante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoBuscarFabricanteMouseClicked(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        jLabel1.setText("Editar Fabricante");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(199, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(189, 189, 189))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelRemover)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(caixaRemoverFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(botaoRemoverFabricante)))
-                        .addGap(266, 266, 266))))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(botaoNovoFabricante)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(87, 87, 87)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(caixaRemoverFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoRemoverFabricante))
+                    .addComponent(labelRemover))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botaoEditar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(caixaCodigoFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoBuscarFabricante)
+                        .addGap(41, 41, 41))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(caixaNomeFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoEditarFabricante))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel1)
+                        .addGap(56, 56, 56)))
+                .addGap(94, 94, 94))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(184, 184, 184)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 204, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoNovoFabricante)
-                    .addComponent(botaoEditar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addComponent(labelRemover)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoRemoverFabricante)
-                    .addComponent(caixaRemoverFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                .addComponent(botaoNovoFabricante)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(labelRemover)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botaoRemoverFabricante)
+                            .addComponent(caixaRemoverFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(caixaCodigoFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botaoBuscarFabricante))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(caixaNomeFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botaoEditarFabricante))))
+                .addGap(76, 76, 76)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78))
+                .addGap(34, 34, 34))
         );
 
         pack();
@@ -167,21 +205,47 @@ public class TelaFabricantePesquisa extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoNovoFabricanteMouseClicked
 
     private void botaoRemoverFabricanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoRemoverFabricanteMouseClicked
-        
-        try{
-        Fabricante fabricante = new Fabricante(Long.parseLong(caixaRemoverFabricante.getText()));
-        FabricanteController fcontroller = new FabricanteController(fabricante);
-        if(fcontroller.removerFabricante()){
-            mostrarTabela();
+
+        try {
+            Fabricante fabricante = new Fabricante(Long.parseLong(caixaRemoverFabricante.getText()));
+            FabricanteController fcontroller = new FabricanteController(fabricante);
+            if (fcontroller.removerFabricante()) {
+                mostrarTabela();
+            }
+
+        } catch (NumberFormatException e1) {
+            JOptionPane.showMessageDialog(null, "Codigo Incorreto!");
         }
-        
-        }catch(NumberFormatException e1){JOptionPane.showMessageDialog(null, "Codigo Incorreto!");}
     }//GEN-LAST:event_botaoRemoverFabricanteMouseClicked
 
-    private void botaoEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoEditarMouseClicked
-        new TelaFabricanteEditar().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_botaoEditarMouseClicked
+    private void botaoEditarFabricanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoEditarFabricanteMouseClicked
+
+        try{
+        Fabricante fabricante = new Fabricante(Long.parseLong(caixaCodigoFabricante.getText()));
+        FabricanteController fabricantecontroller = new FabricanteController(fabricante);
+        
+        if(caixaNomeFabricante.equals("")){JOptionPane.showMessageDialog(null, "Nome Vazio!");}
+        else{fabricantecontroller.EditarFabricante();
+        
+        }
+        mostrarTabela();
+        }catch(NumberFormatException e1){JOptionPane.showMessageDialog(null, "Digite o Codigo do Fabricante!");}
+    }//GEN-LAST:event_botaoEditarFabricanteMouseClicked
+
+    private void botaoBuscarFabricanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoBuscarFabricanteMouseClicked
+        
+        try{
+        Fabricante fabricante = new Fabricante(Long.parseLong(caixaCodigoFabricante.getText()));
+        
+        FabricanteController fabricantecontroller = new FabricanteController(fabricante);
+        
+        fabricantecontroller.buscarFabricante();
+        botaoEditarFabricante.setVisible(true);
+        caixaNomeFabricante.setVisible(true);
+       
+        }catch(NumberFormatException e1){JOptionPane.showMessageDialog(null, "Digite o Codigo do Fabricante!");}
+        
+    }//GEN-LAST:event_botaoBuscarFabricanteMouseClicked
 
     /**
      * @param args the command line arguments
@@ -220,10 +284,14 @@ public class TelaFabricantePesquisa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botaoEditar;
+    private javax.swing.JButton botaoBuscarFabricante;
+    private javax.swing.JButton botaoEditarFabricante;
     private javax.swing.JButton botaoNovoFabricante;
     private javax.swing.JButton botaoRemoverFabricante;
+    public static javax.swing.JTextField caixaCodigoFabricante;
+    public static javax.swing.JTextField caixaNomeFabricante;
     private javax.swing.JTextField caixaRemoverFabricante;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelRemover;
     private javax.swing.JTable tabelaFabricante;

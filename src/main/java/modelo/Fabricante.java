@@ -40,6 +40,11 @@ public class Fabricante {
     public Fabricante(Long codigo) {
         this.codigo = codigo;
     }
+
+    public Fabricante(Long codigo, String nome) {
+        this.codigo = codigo;
+        this.nome = nome;
+    }
     
     
 
