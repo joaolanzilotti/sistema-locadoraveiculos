@@ -69,6 +69,7 @@ public class FabricanteController {
         {
 
             JOptionPane.showMessageDialog(null, "Fabricante Encontrado!", "AVISO", WIDTH);
+            
             isValidBusca = true;
 
         }
