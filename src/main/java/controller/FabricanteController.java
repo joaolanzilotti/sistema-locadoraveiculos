@@ -1,6 +1,5 @@
 package controller;
 
-import GUI.TelaFabricantePesquisa;
 import helper.Conexao;
 import static java.awt.image.ImageObserver.HEIGHT;
 import static java.awt.image.ImageObserver.WIDTH;
@@ -12,16 +11,10 @@ import modelo.Fabricante;
 public class FabricanteController {
 
     Fabricante fabricante;
-    TelaFabricantePesquisa fabricantepesquisa;
 
     public FabricanteController(Fabricante fabricante) {
         this.fabricante = fabricante;
     }
-
-    public FabricanteController(TelaFabricantePesquisa fabricantepesquisa) {
-        this.fabricantepesquisa = fabricantepesquisa;
-    }
-
 
     public void salvarFabricante() {
 
@@ -65,30 +58,22 @@ public class FabricanteController {
 
     }
 
-    public void buscarFabricante() {
+    public boolean buscarFabricante() {
 
-        EntityManager em = Conexao.getInstancia().getMysqlPU();
+        boolean isValidBusca = false;
 
-        System.out.println(fabricante.getCodigo());
-
-        List<Fabricante> listaFabricantes = em.createQuery("select c from Fabricante c where c.codigo=:codigoForm", Fabricante.class).setParameter("codigoForm", fabricante.getCodigo()).getResultList();
-
-        System.out.println(listaFabricantes);
-
-        if (TelaFabricantePesquisa.caixaCodigoFabricante.getText().isEmpty()) {
+        if (fabricante.getCodigo().equals(""))
+        {
             JOptionPane.showMessageDialog(null, "Codigo Não Digitado", "AVISO", HEIGHT);
-        } else {
+        } else
+        {
 
-            for (Fabricante fabricante1 : listaFabricantes) {
+            JOptionPane.showMessageDialog(null, "Fabricante Encontrado!", "AVISO", WIDTH);
+            isValidBusca = true;
 
-                JOptionPane.showMessageDialog(null, "Fabricante Encontrado!", "AVISO", WIDTH);
-                TelaFabricantePesquisa.caixaCodigoFabricante.setText(String.valueOf(fabricante1.getCodigo()));
-                TelaFabricantePesquisa.caixaNomeFabricante.setText(fabricante1.getNome());
+        }
 
-            }
-            
-        }  
-
+        return isValidBusca;
     }
     
     public void EditarFabricante(){
@@ -98,7 +83,7 @@ public class FabricanteController {
         List<Fabricante> listaFabricantes = em.createQuery("select c from Fabricante c where c.codigo=:codigoForm ", Fabricante.class).setParameter("codigoForm", fabricante.getCodigo()).getResultList();
         System.out.println(listaFabricantes);
 
-        if (TelaFabricantePesquisa.caixaCodigoFabricante.getText().equals("") || TelaFabricantePesquisa.caixaNomeFabricante.getText().equals("")) {
+        if (fabricante.getCodigo().equals("") || fabricante.getNome().equals("")) {
             JOptionPane.showMessageDialog(null, "Campos Obrigatórios!", "AVISO", HEIGHT);
         } else if (listaFabricantes.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Fabricante Não Encontrado!", "AVISO", HEIGHT);
@@ -108,8 +93,8 @@ public class FabricanteController {
 
                 em.getTransaction().begin();
 
-                fabricante1.setNome(TelaFabricantePesquisa.caixaNomeFabricante.getText());
-                fabricante1.setCodigo(Long.parseLong(TelaFabricantePesquisa.caixaCodigoFabricante.getText()));
+                fabricante1.setNome(fabricante.getNome());
+                fabricante1.setCodigo(fabricante.getCodigo());
 
                 em.getTransaction().commit();
 

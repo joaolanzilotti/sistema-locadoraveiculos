@@ -17,6 +17,8 @@ import modelo.Fabricante;
 
 public class TelaFabricantePesquisa extends javax.swing.JFrame {
 
+    Fabricante fabricante;
+    
     private List<Fabricante> temporario = new ArrayList<>();
 
     public void mostrarTabela() {
@@ -47,7 +49,7 @@ public class TelaFabricantePesquisa extends javax.swing.JFrame {
         initComponents();
         mostrarTabela();
         botaoEditarFabricante.setVisible(false);
-        caixaNomeFabricante.setVisible(false);
+        CaixaNomeFabricante.setVisible(false);
     }
 
     /**
@@ -66,9 +68,9 @@ public class TelaFabricantePesquisa extends javax.swing.JFrame {
         caixaRemoverFabricante = new javax.swing.JTextField();
         labelRemover = new javax.swing.JLabel();
         botaoEditarFabricante = new javax.swing.JButton();
-        caixaCodigoFabricante = new javax.swing.JTextField();
+        CaixaCodigoFabricante = new javax.swing.JTextField();
         botaoBuscarFabricante = new javax.swing.JButton();
-        caixaNomeFabricante = new javax.swing.JTextField();
+        CaixaNomeFabricante = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -150,12 +152,12 @@ public class TelaFabricantePesquisa extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(caixaCodigoFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(CaixaCodigoFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoBuscarFabricante)
                         .addGap(41, 41, 41))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(caixaNomeFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(CaixaNomeFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoEditarFabricante))
                     .addGroup(layout.createSequentialGroup()
@@ -184,11 +186,11 @@ public class TelaFabricantePesquisa extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(caixaCodigoFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CaixaCodigoFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botaoBuscarFabricante))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(caixaNomeFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CaixaNomeFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botaoEditarFabricante))))
                 .addGap(76, 76, 76)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -220,31 +222,46 @@ public class TelaFabricantePesquisa extends javax.swing.JFrame {
 
     private void botaoEditarFabricanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoEditarFabricanteMouseClicked
 
-        try{
-        Fabricante fabricante = new Fabricante(Long.parseLong(caixaCodigoFabricante.getText()));
+        try {
+        Fabricante fabricante = new Fabricante(Long.parseLong(CaixaCodigoFabricante.getText()), CaixaNomeFabricante.getText());
         FabricanteController fabricantecontroller = new FabricanteController(fabricante);
         
-        if(caixaNomeFabricante.equals("")){JOptionPane.showMessageDialog(null, "Nome Vazio!");}
+        if(fabricante.getNome().equals("")){JOptionPane.showMessageDialog(null, "Nome Vazio!");}
         else{fabricantecontroller.EditarFabricante();
         
         }
         mostrarTabela();
-        }catch(NumberFormatException e1){JOptionPane.showMessageDialog(null, "Digite o Codigo do Fabricante!");}
+        } catch (NumberFormatException e1) {
+            JOptionPane.showMessageDialog(null, "Digite o Codigo do Fabricante!");
+        }
     }//GEN-LAST:event_botaoEditarFabricanteMouseClicked
 
     private void botaoBuscarFabricanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoBuscarFabricanteMouseClicked
-        
-        try{
-        Fabricante fabricante = new Fabricante(Long.parseLong(caixaCodigoFabricante.getText()));
-        
-        FabricanteController fabricantecontroller = new FabricanteController(fabricante);
-        
-        fabricantecontroller.buscarFabricante();
-        botaoEditarFabricante.setVisible(true);
-        caixaNomeFabricante.setVisible(true);
-       
-        }catch(NumberFormatException e1){JOptionPane.showMessageDialog(null, "Digite o Codigo do Fabricante!");}
-        
+
+        try {
+            Fabricante fabricante = new Fabricante(Long.parseLong(CaixaCodigoFabricante.getText()), CaixaNomeFabricante.getText());
+
+            EntityManager em = Conexao.getInstancia().getMysqlPU();
+
+            List<Fabricante> listaFabricantes = em.createQuery("select c from Fabricante c where c.codigo=:codigoForm", Fabricante.class).setParameter("codigoForm", fabricante.getCodigo()).getResultList();
+
+            FabricanteController fabricantecontroller = new FabricanteController(fabricante);
+
+            if (fabricantecontroller.buscarFabricante()) {
+
+                for (Fabricante fabricante1 : listaFabricantes) {
+
+                    CaixaCodigoFabricante.setText(String.valueOf(fabricante1.getCodigo()));
+                    CaixaNomeFabricante.setText(fabricante1.getNome());
+                }
+            }
+            botaoEditarFabricante.setVisible(true);
+            CaixaNomeFabricante.setVisible(true);
+
+        } catch (NumberFormatException e1) {
+            JOptionPane.showMessageDialog(null, "Digite o Codigo do Fabricante!");
+        }
+
     }//GEN-LAST:event_botaoBuscarFabricanteMouseClicked
 
     /**
@@ -284,12 +301,12 @@ public class TelaFabricantePesquisa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField CaixaCodigoFabricante;
+    private javax.swing.JTextField CaixaNomeFabricante;
     private javax.swing.JButton botaoBuscarFabricante;
     private javax.swing.JButton botaoEditarFabricante;
     private javax.swing.JButton botaoNovoFabricante;
     private javax.swing.JButton botaoRemoverFabricante;
-    public static javax.swing.JTextField caixaCodigoFabricante;
-    public static javax.swing.JTextField caixaNomeFabricante;
     private javax.swing.JTextField caixaRemoverFabricante;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
