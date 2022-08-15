@@ -81,7 +81,7 @@ public class FabricanteController {
 
             for (Fabricante fabricante1 : listaFabricantes) {
 
-                JOptionPane.showMessageDialog(null, "Cliente Encontrado!", "AVISO", WIDTH);
+                JOptionPane.showMessageDialog(null, "Fabricante Encontrado!", "AVISO", WIDTH);
                 TelaFabricantePesquisa.caixaCodigoFabricante.setText(String.valueOf(fabricante1.getCodigo()));
                 TelaFabricantePesquisa.caixaNomeFabricante.setText(fabricante1.getNome());
 
@@ -101,7 +101,7 @@ public class FabricanteController {
         if (TelaFabricantePesquisa.caixaCodigoFabricante.getText().equals("") || TelaFabricantePesquisa.caixaNomeFabricante.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Campos Obrigatórios!", "AVISO", HEIGHT);
         } else if (listaFabricantes.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Cliente Não Encontrado!", "AVISO", HEIGHT);
+            JOptionPane.showMessageDialog(null, "Fabricante Não Encontrado!", "AVISO", HEIGHT);
         } else {
 
             for (Fabricante fabricante1 : listaFabricantes) {
