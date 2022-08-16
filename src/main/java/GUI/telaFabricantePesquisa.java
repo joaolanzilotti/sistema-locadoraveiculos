@@ -240,28 +240,24 @@ public class TelaFabricantePesquisa extends javax.swing.JFrame {
 
         try {
             Fabricante fabricante = new Fabricante(Long.parseLong(CaixaCodigoFabricante.getText()), CaixaNomeFabricante.getText());
-
-            EntityManager em = Conexao.getInstancia().getMysqlPU();
-
-            List<Fabricante> listaFabricantes = em.createQuery("select c from Fabricante c where c.codigo=:codigoForm", Fabricante.class).setParameter("codigoForm", fabricante.getCodigo()).getResultList();
-
+            
             FabricanteController fabricantecontroller = new FabricanteController(fabricante);
-
-            if (fabricantecontroller.buscarFabricante()) {
-
-                for (Fabricante fabricante1 : listaFabricantes) {
-
-                    CaixaCodigoFabricante.setText(String.valueOf(fabricante1.getCodigo()));
-                    CaixaNomeFabricante.setText(fabricante1.getNome());
-                }
+            
+            if(fabricantecontroller.buscarFabricante()){
+            
+                CaixaNomeFabricante.setText(fabricantecontroller.getNomeBusca());
+                
             }
+
+
             botaoEditarFabricante.setVisible(true);
             CaixaNomeFabricante.setVisible(true);
 
-        } catch (NumberFormatException e1) {
-            JOptionPane.showMessageDialog(null, "Digite o Codigo do Fabricante!");
-        }
 
+        }catch (NumberFormatException e1) {
+            JOptionPane.showMessageDialog(null, "Digite o Codigo do Fabricante!");
+        }        
+        
     }//GEN-LAST:event_botaoBuscarFabricanteMouseClicked
 
     /**

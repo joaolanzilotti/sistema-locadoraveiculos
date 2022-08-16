@@ -10,6 +10,16 @@ import modelo.Fabricante;
 
 public class FabricanteController {
 
+    private String nomeBusca;
+
+    public String getNomeBusca() {
+        return nomeBusca;
+    }
+
+    public FabricanteController(String nomeBusca) {
+        this.nomeBusca = nomeBusca;
+    }
+
     Fabricante fabricante;
 
     public FabricanteController(Fabricante fabricante) {
@@ -62,23 +72,34 @@ public class FabricanteController {
 
         boolean isValidBusca = false;
 
-        if (fabricante.getCodigo().equals(""))
-        {
+        if (fabricante.getCodigo().equals("")) {
             JOptionPane.showMessageDialog(null, "Codigo Não Digitado", "AVISO", HEIGHT);
-        } else
-        {
+        } else {
+
+
+                EntityManager em = Conexao.getInstancia().getMysqlPU();
+
+                List<Fabricante> listaFabricantes = em.createQuery("select c from Fabricante c where c.codigo=:codigoForm", Fabricante.class).setParameter("codigoForm", fabricante.getCodigo()).getResultList();
+
+                for (Fabricante fabricante1 : listaFabricantes) {
+
+                    this.nomeBusca = fabricante1.getNome();
+
+                }
+
+            } 
 
             JOptionPane.showMessageDialog(null, "Fabricante Encontrado!", "AVISO", WIDTH);
-            
             isValidBusca = true;
-
-        }
-
-        return isValidBusca;
-    }
-    
-    public void EditarFabricante(){
         
+        return isValidBusca;
+
+    
+    }
+
+
+    public void EditarFabricante() {
+
         EntityManager em = Conexao.getInstancia().getMysqlPU();
 
         List<Fabricante> listaFabricantes = em.createQuery("select c from Fabricante c where c.codigo=:codigoForm ", Fabricante.class).setParameter("codigoForm", fabricante.getCodigo()).getResultList();
@@ -106,5 +127,5 @@ public class FabricanteController {
             em.close();
         }
     }
-    
+
 }
