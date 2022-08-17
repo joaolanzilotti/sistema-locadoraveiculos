@@ -52,6 +52,11 @@ public class InicioGUI extends javax.swing.JFrame {
         botaoCarro.setText("Carro");
 
         botaoModeloCarro.setText("Modelo Carro");
+        botaoModeloCarro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoModeloCarroMouseClicked(evt);
+            }
+        });
 
         botaoAcessorio.setText("Acessório");
 
@@ -125,6 +130,11 @@ public class InicioGUI extends javax.swing.JFrame {
         new TelaFabricante().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_botaoFabricanteMouseClicked
+
+    private void botaoModeloCarroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoModeloCarroMouseClicked
+        new TelaModeloCarro().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_botaoModeloCarroMouseClicked
 
     /**
      * @param args the command line arguments

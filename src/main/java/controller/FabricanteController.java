@@ -28,8 +28,6 @@ public class FabricanteController {
 
     public void salvarFabricante() {
 
-//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("locadoraJ");
-//        EntityManager em = emf.createEntityManager();
         System.out.println(fabricante.getNome());
 
         EntityManager em = Conexao.getInstancia().getMysqlPU();
